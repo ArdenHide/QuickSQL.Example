@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace UniversalAPI.Example
@@ -14,50 +13,53 @@ namespace UniversalAPI.Example
             {
                 new Dictionary<string, dynamic>
                 {
-                    { "Request", "wallet" },
-                    { "Id", 3 },
-                    { "Owner", "0x3a31ee5557c9369c35573496555b1bc93553b553" }
-                },
-                new Dictionary<string, dynamic>
-                {
-                    { "Request", "mysignup" },
                     { "Id", 3 },
                     { "address", "0x3a31ee5557c9369c35573496555b1bc93553b553" }
                 },
                 new Dictionary<string, dynamic>
                 {
-                    { "Request", "tokenbalanse" },
-                    { "Id", 1 }
+                    { "Id", 3 },
+                    { "Owner", "0x3a31ee5557c9369c35573496555b1bc93553b553" }
                 },
                 new Dictionary<string, dynamic>
                 {
-                    { "Request", "tokenbalanse" }
+                    { "Id", 1 }
+                },
+                new Dictionary<string, dynamic> { }     // Request without parameters
+            };
+
+            //2. Setting requets
+            List<APIRequestSettings> requestSettings = new List<APIRequestSettings>
+            {
+                new APIRequestSettings {
+                    SelectedTables = "SignUp, LeaderBoard",
+                    SelectedColumns = "SignUp.PoolId, LeaderBoard.Rank, LeaderBoard.Owner, LeaderBoard.Amount",
+                    JoinCondition = "SignUp.Address = LeaderBoard.Owner"
+                },
+                new APIRequestSettings {
+                    SelectedTables = "Wallets",
+                    SelectedColumns = "*"
+                },
+                new APIRequestSettings {
+                    SelectedTables = "TokenBalances",
+                    SelectedColumns = "Token, Owner, Amount"
+                },
+                new APIRequestSettings {
+                    SelectedTables = "TokenBalances",
+                    SelectedColumns = "Token, Owner, Amount"
                 }
             };
-            Environment.SetEnvironmentVariable("UniversalAPI.ConnectionString", ConnectionString.ConnectionToApi);
 
+            // By default, the console logging option is enabled
+            //APIClient.ConsoleLogEnabled = false;
 
-            var optionsBuilder = new DbContextOptionsBuilder<APIContext>();
-            var options = optionsBuilder
-                .UseSqlServer(ConnectionString.ConnectionToApi).Options;
-
-            using (var context = new APIContext(options))
+            for (int i = 0; i < requests.Count; i++)
             {
-                //2. Create api obj
-                APIClient api = new APIClient(ConnectionString.ConnectionToData);
+                //3. Create request
+                var request = JsonConvert.SerializeObject(requests[i]);
 
-                // By default, the console logging option is enabled
-                //api.ConsoleLogEnabled = false;
-
-                foreach (var data in requests)
-                {
-                    //3. Create request
-                    var request = JsonConvert.SerializeObject(data);
-
-                    //4. Invoke request
-                    string result = api.InvokeRequest(request, context);
-                    //Console.WriteLine(result);
-                }
+                //4. Invoke request
+                string result = APIClient.InvokeRequest(request, requestSettings[i], ConnectionString.ConnectionToData);
             }
             Console.ReadLine();
         }

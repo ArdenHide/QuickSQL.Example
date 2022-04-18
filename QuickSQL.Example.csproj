@@ -3,21 +3,18 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>QuickSql.Example</AssemblyName>
+    <RootNamespace>QuickSql.Example</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Nethereum.Util" Version="4.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="UniversalAPI">
-      <HintPath>..\APIs\UniversalAPI\obj\Release\netcoreapp3.1\UniversalAPI.dll</HintPath>
+      <HintPath>..\APIs\QuickSql\obj\Release\netcoreapp3.1\QuickSql.dll</HintPath>
     </Reference>
   </ItemGroup>
 

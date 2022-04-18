@@ -1,4 +1,4 @@
-﻿namespace UniversalAPI.Example.DBModel
+﻿namespace QuickSQL.Example.DBModel
 {
     public class SignUp
     {

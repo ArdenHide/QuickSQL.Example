@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace UniversalAPI.Example.DBModel
+namespace QuickSQL.Example.DBModel
 {
     public class DataContext : DbContext
     {
@@ -9,11 +9,10 @@ namespace UniversalAPI.Example.DBModel
         public DbSet<LeaderBoard> LeaderBoard { get; set; }
         public DbSet<SignUp> SignUp { get; set; }
 
-        public DataContext() { }
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            Database.EnsureCreated();
             Database.EnsureDeleted();
+            Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

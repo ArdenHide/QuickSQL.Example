@@ -108,6 +108,12 @@ namespace QuickSQL.Example
                 //
                 //      QuickSql finished...
                 //      Program execution time: YOUR_EXECUTION_TIME
+
+                QuickSql.ConsoleOutputEnabled = false;
+                string result = QuickSql.InvokeRequest(tokenBalances1, context);
+                Console.WriteLine(result);
+                //  The example displays the following output:
+                //      [{"Token":"ADH","Owner":"0x1a01ee5577c9d69c35a77496565b1bc95588b521","Amount":"400"}]
             }
             Console.ReadLine();
         }
